@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Home.css";
 import trash_icon from "../../assets/trash_icon.png";
 
@@ -26,6 +26,8 @@ function Home() {
 
     setEntry(copyEntry);
 
+    localStorage.setItem("@task", JSON.stringify(copyEntry));
+
     setTitle("");
     setCategory("");
     setDate("");
@@ -39,6 +41,21 @@ function Home() {
 
     setEntry(entryFiltered);
   }
+
+  function showLocalStorage() {
+    const taskString = localStorage.getItem("@task");
+
+    if (taskString) {
+      const taskJSON = JSON.parse(taskString);
+      setEntry(taskJSON);
+    }
+  }
+
+  useEffect(() => {
+    showLocalStorage();
+  }, []);
+
+  // showLocalStorage();
 
   return (
     <div className="container">
